@@ -1,5 +1,5 @@
 """
-This file is part of the Mod Settings Menu licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
+This file is part of the The Sims 4 Mod Settings Menu licensed under the Creative Commons Attribution 4.0 International public license (CC BY 4.0).
 
 https://creativecommons.org/licenses/by/4.0/
 https://creativecommons.org/licenses/by/4.0/legalcode
@@ -8,21 +8,26 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from sims4modsettingsmenu.dialogs.mod_settings_menu_dialog import S4ModSettingsMenu
 from sims4modsettingsmenu.modinfo import ModInfo
 from event_testing.results import TestResult
 from interactions.context import InteractionContext
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
-from sims4communitylib.utils.common_type_utils import CommonTypeUtils
 from sims4communitylib.utils.sims.common_sim_utils import CommonSimUtils
+from sims4modsettingsmenu.registration.mod_settings_registry import S4MSMModSettingsRegistry
 
 
 class S4MSMOpenModSettingsMenuInteraction(CommonImmediateSuperInteraction):
     """S4MSMOpenModSettingsMenuInteraction(*_, **__)
 
-    Show the mod settings menu.
+    Open the Mod Settings Menu.
     """
+
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self._mod_settings_menu = S4ModSettingsMenu()
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
@@ -34,6 +39,17 @@ class S4MSMOpenModSettingsMenuInteraction(CommonImmediateSuperInteraction):
     def get_log_identifier(cls) -> str:
         return 's4msm_open_mod_settings_menu'
 
+    @classmethod
+    def get_mod_settings_registry(cls) -> S4MSMModSettingsRegistry:
+        """get_mod_settings_registry()
+
+        Retrieve an instance of the mod settings registry.
+
+        :return: An instance of the mod settings registry.
+        :rtype: S4MSMModSettingsRegistry
+        """
+        return S4MSMModSettingsRegistry()
+
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
@@ -44,8 +60,9 @@ class S4MSMOpenModSettingsMenuInteraction(CommonImmediateSuperInteraction):
             interaction_context=interaction_context,
             kwargles=kwargs
         )
-        if interaction_target is None or not CommonTypeUtils.is_sim_or_sim_info(interaction_target):
-            cls.get_log().debug('Failed, Target is not a Sim.')
+        source_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
+        if not cls.get_mod_settings_registry().has_menu_items_available_for(source_sim_info, target=interaction_target):
+            cls.get_log().debug('No menu items were available for \'{}\''.format(interaction_target))
             return TestResult.NONE
         cls.get_log().debug('Success, can open mod settings.')
         return TestResult.TRUE
@@ -58,6 +75,5 @@ class S4MSMOpenModSettingsMenuInteraction(CommonImmediateSuperInteraction):
             interaction_target=interaction_target
         )
         source_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
-        target_sim_info = CommonSimUtils.get_sim_info(interaction_target)
-        # S4MSMModSettingsMenuDialog().open(source_sim_info, target_sim_info)
+        self._mod_settings_menu.open(source_sim_info, target=interaction_target)
         return True
