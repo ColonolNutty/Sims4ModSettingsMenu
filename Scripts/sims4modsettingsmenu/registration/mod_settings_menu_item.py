@@ -6,10 +6,9 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import Callable, Any
+from typing import Callable, Any, Union
 from protocolbuffers.Localization_pb2 import LocalizedString
 from sims.sim_info import SimInfo
-from sims4communitylib.dialogs.option_dialogs.common_option_dialog import CommonOptionDialog
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
@@ -26,24 +25,24 @@ class S4MSMMenuItem(HasLog):
         """
         An identifier used to sort alphabetically.
         """
-        raise NotImplementedError('Missing \'{}.identifier\'.'.format(self.__class__.__name__))
+        return self.mod_identity.base_namespace
 
     # noinspection PyMissingOrEmptyDocstring
     @property
-    def title(self) -> LocalizedString:
+    def mod_name(self) -> Union[int, str, LocalizedString]:
         """
-        The title of the menu item. It will display within the MSM dialog.
+        The name of the mod the menu item belongs to. It will display within the MSM dialog.
 
-        :return: A localized string representing the title of this menu item.
-        :rtype: LocalizedString
+        :return: A localized string, decimal identifier, or test representing the name of the mod owning this menu item.
+        :rtype: Union[int, str, LocalizedString]
         """
-        raise NotImplementedError('Missing \'{}.title\'.'.format(self.__class__.__name__))
+        return self.mod_identity.name
 
     # noinspection PyMissingOrEmptyDocstring
     @property
     def description(self) -> LocalizedString:
         """
-        A description of the menu item. It will display within the MSM dialog.
+        A description of the menu item. It will display as a tooltip within the MSM dialog.
 
         :return: A localized string representing the description of this menu item.
         :rtype: LocalizedString
@@ -76,15 +75,15 @@ class S4MSMMenuItem(HasLog):
         """
         raise NotImplementedError('Missing \'{}.is_available_for\'.'.format(self.__class__.__name__))
 
-    def build(
+    def show(
         self,
         source_sim_info: SimInfo,
         *args,
         target: Any=None,
         on_close: Callable[..., Any]=CommonFunctionUtils.noop,
         **kwargs
-    ) -> CommonOptionDialog:
-        """build(\
+    ):
+        """show(\
             source_sim_info,\
             *args,\
             target=None,\
@@ -92,7 +91,7 @@ class S4MSMMenuItem(HasLog):
             **kwargs\
         )
 
-        Build the settings dialog.
+        Show the settings dialog.
 
         :param source_sim_info: An instance of a Sim.
         :type source_sim_info: SimInfo
@@ -100,7 +99,5 @@ class S4MSMMenuItem(HasLog):
         :type target: Any, optional
         :param on_close: The action to take upon the settings being closed. Default is CommonFunctionUtils.noop.
         :type on_close: Callable[..., Any], optional
-        :return: An instance of an option dialog.
-        :rtype: CommonOptionDialog
         """
-        raise NotImplementedError('Missing \'{}.build\'.'.format(self.__class__.__name__))
+        raise NotImplementedError('Missing \'{}.show\'.'.format(self.__class__.__name__))

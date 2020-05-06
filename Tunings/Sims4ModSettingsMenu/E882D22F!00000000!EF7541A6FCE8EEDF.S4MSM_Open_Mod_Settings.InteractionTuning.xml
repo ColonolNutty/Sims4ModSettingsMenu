@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<I c="S4MSMOpenModSettingsMenuInteraction" i="interaction" m="sims4modsettingsmenu.interactions.open_mod_settings_menu" n="S4MSM_Open_Mod_Settings" s="17254769732803423967">
+  <V n="_saveable" t="disabled" />
+  <T n="category">0</T>
+  <T n="display_name">0x630737CA<!--Configure Mod Settings--></T>
+  <U n="progress_bar_enabled">
+    <T n="bar_enabled">False</T>
+  </U>
+  <E n="target_type">OBJECT</E>
+  <V n="pie_menu_icon" t="enabled">
+    <V n="enabled" t="resource_key">
+      <U n="resource_key">
+        <T n="key">2f7d0004:00000000:f16f5be93783ecbb</T>
+      </U>
+    </V>
+  </V>
+  <T n="pie_menu_priority">9</T>
+  <T n="cheat">True</T>
+  <T n="debug">True</T>
+  <L n="interaction_category_tags">
+    <E>INVALID</E>
+  </L>
+</I>
