@@ -86,7 +86,8 @@ class S4ModSettingsMenu(HasLog):
                     CommonDialogOptionContext(
                         menu_item.title,
                         menu_item.description,
-                        tooltip_text_identifier=menu_item.tooltip_text
+                        tooltip_text_identifier=menu_item.tooltip_text,
+                        icon=menu_item.icon
                     ),
                     on_chosen=_on_chosen
                 )

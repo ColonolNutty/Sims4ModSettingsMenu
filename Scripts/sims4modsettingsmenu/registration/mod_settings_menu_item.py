@@ -6,6 +6,8 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
+# noinspection PyUnresolvedReferences
+import _resourceman
 from typing import Callable, Any, Union
 from protocolbuffers.Localization_pb2 import LocalizedString
 from sims.sim_info import SimInfo
@@ -68,7 +70,26 @@ class S4MSMMenuItem(HasLog):
         """
         return self._default_description
 
-    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def icon(self) -> _resourceman.Key:
+        """
+        An icon that will replace the default select icon for the mod in the MSM dialog.
+
+        An Icon may be loaded in the following example.
+
+
+        .. highlight:: python
+        .. code-block:: python
+
+            CommonResourceUtils.get_resource_key(Types.PNG, CommonIconId.S4CLIB_ARROW_RIGHT_ICON)
+
+        .. note:: _resourceman has issues being resolved, but it does in fact exist! -> import _resourceman
+
+        :return: The resource key of the icon to display for this menu item.
+        :rtype: _resourceman.Key
+        """
+        return None
+
     @property
     def tooltip_text(self) -> Union[LocalizedString, None]:
         """
