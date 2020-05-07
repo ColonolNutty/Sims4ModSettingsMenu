@@ -3,11 +3,11 @@
 ## Description:
 - A mod that adds an interaction that allows you to configure the settings for all of your other mods in a single easy to find place.
 
-## Interactions Added:
-- Configure Mod Settings (SHIFT+CLICK on a Sim -> Configure Mod Settings)
-
 ## Usage:
 - This mod is intended to be a central hub for mods to allow configuration of their settings, rather than having a million different interactions for modifying settings.
+
+## Interactions Added:
+- Configure Mod Settings (SHIFT+CLICK on a Sim -> Configure Mod Settings)
 
 ## Note:
 - In order for the Configure Mod Settings interaction to appear, you must perform this command "testingcheats on" in the CTRL+SHIFT+C command box.
