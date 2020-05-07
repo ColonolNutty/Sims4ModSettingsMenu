@@ -12,6 +12,8 @@ from sims.sim_info import SimInfo
 from sims4communitylib.logging.has_log import HasLog
 from sims4communitylib.mod_support.mod_identity import CommonModIdentity
 from sims4communitylib.utils.common_function_utils import CommonFunctionUtils
+from sims4communitylib.utils.localization.common_localization_utils import CommonLocalizationUtils
+from sims4modsettingsmenu.enums.string_ids import S4MSMStringId
 
 
 class S4MSMMenuItem(HasLog):
@@ -20,10 +22,18 @@ class S4MSMMenuItem(HasLog):
     A menu item that will display in the Mod Settings Menu. When selected, it will display a dialog containing settings.
     """
 
+    def __init__(self) -> None:
+        super().__init__()
+        self._default_title = CommonLocalizationUtils.create_localized_string(S4MSMStringId.MOD_SETTINGS, tokens=(self.mod_name,))
+        self._default_description = CommonLocalizationUtils.create_localized_string(S4MSMStringId.ALL_SETTINGS_RELATED_TO_MOD, tokens=(self.mod_name,))
+
     @property
     def identifier(self) -> str:
         """
         An identifier used to sort alphabetically.
+
+        :return: A text identifier.
+        :rtype: str
         """
         return self.mod_identity.base_namespace
 
@@ -38,16 +48,36 @@ class S4MSMMenuItem(HasLog):
         """
         return self.mod_identity.name
 
+    @property
+    def title(self) -> Union[int, str, LocalizedString, None]:
+        """
+        The title of the menu item to display in the MSM dialog.
+
+        :return: A localized string, decimal identifier, or test representing the title of this menu item.
+        :rtype: Union[int, str, LocalizedString, None]
+        """
+        return self._default_title
+
+    @property
+    def description(self) -> Union[int, str, LocalizedString, None]:
+        """
+        The description of the menu item to display in the MSM dialog.
+
+        :return: A localized string, decimal identifier, or test representing the description of this menu item.
+        :rtype: Union[int, str, LocalizedString, None]
+        """
+        return self._default_description
+
     # noinspection PyMissingOrEmptyDocstring
     @property
-    def description(self) -> LocalizedString:
+    def tooltip_text(self) -> Union[LocalizedString, None]:
         """
         A description of the menu item. It will display as a tooltip within the MSM dialog.
 
         :return: A localized string representing the description of this menu item.
         :rtype: LocalizedString
         """
-        raise NotImplementedError('Missing \'{}.description\'.'.format(self.__class__.__name__))
+        return None
 
     # noinspection PyMissingOrEmptyDocstring
     @property
