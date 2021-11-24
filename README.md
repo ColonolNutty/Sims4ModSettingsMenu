@@ -17,6 +17,9 @@
   - A: The interaction will only appear in places with settings configured for those places. For example, if a registered Setting relies on having a Sim as the Target, that mods settings will only appear when clicking on a Sim.
 - Q: Why are there so little amount of settings available to configure?
   - A: A mod must add support for MSM within their mod for their settings to be configurable. If no mods add support, then no settings will be configurable.
+  
+## For Mod Authors:
+- If you want to add your own settings menu to the MSM menu, check out the tutorial here: https://github.com/ColonolNutty/Sims4ModSettingsMenu/wiki/How-To-Add-MSM-Support-To-Your-Mod
 
 ## Planned Features:
 - Add the ability to persist settings to a save file or import/export settings to and from a settings file, so mods will not need to do this themselves.
