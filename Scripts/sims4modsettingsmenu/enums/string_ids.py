@@ -6,17 +6,10 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-# noinspection PyBroadException
-try:
-    # noinspection PyUnresolvedReferences
-    from enum import Int
-except:
-    # noinspection PyMissingOrEmptyDocstring
-    class Int:
-        pass
+from sims4communitylib.enums.enumtypes.common_int import CommonInt
 
 
-class S4MSMStringId(Int):
+class S4MSMStringId(CommonInt):
     """ String Ids used by S4MSM. """
     CONFIGURE_MOD_SETTINGS = 1661417418
     MOD_SETTINGS_MENU = 1260554987

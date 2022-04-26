@@ -45,17 +45,28 @@ class S4MSMMenuItem(HasLog):
         """
         The name of the mod the menu item belongs to. It will display within the MSM dialog.
 
-        :return: A localized string, decimal identifier, or test representing the name of the mod owning this menu item.
+        :return: A localized string, decimal identifier, or text representing the name of the mod owning this menu item.
         :rtype: Union[int, str, LocalizedString]
         """
         return self.mod_identity.name
+
+    # noinspection PyMissingOrEmptyDocstring
+    @property
+    def mod_version(self) -> Union[int, str, LocalizedString]:
+        """
+        The version of the mod the menu item belongs to. It will display within the MSM dialog.
+
+        :return: A localized string, decimal identifier, or text representing the version of the mod owning this menu item.
+        :rtype: Union[int, str, LocalizedString]
+        """
+        return self.mod_identity.version
 
     @property
     def title(self) -> Union[int, str, LocalizedString, None]:
         """
         The title of the menu item to display in the MSM dialog.
 
-        :return: A localized string, decimal identifier, or test representing the title of this menu item.
+        :return: A localized string, decimal identifier, or text representing the title of this menu item.
         :rtype: Union[int, str, LocalizedString, None]
         """
         return self._default_title
@@ -65,7 +76,7 @@ class S4MSMMenuItem(HasLog):
         """
         The description of the menu item to display in the MSM dialog.
 
-        :return: A localized string, decimal identifier, or test representing the description of this menu item.
+        :return: A localized string, decimal identifier, or text representing the description of this menu item.
         :rtype: Union[int, str, LocalizedString, None]
         """
         return self._default_description
@@ -103,7 +114,7 @@ class S4MSMMenuItem(HasLog):
     # noinspection PyMissingOrEmptyDocstring
     @property
     def mod_identity(self) -> CommonModIdentity:
-        raise NotImplementedError('Missing \'{}.mod_identity\'.'.format(self.__class__.__name__))
+        raise NotImplementedError(f'Missing \'{self.__class__.__name__}.mod_identity\'.')
 
     # noinspection PyMissingOrEmptyDocstring
     @property
@@ -124,7 +135,7 @@ class S4MSMMenuItem(HasLog):
         :return: True, if these settings are available for the Target. False, if not.
         :rtype: bool
         """
-        raise NotImplementedError('Missing \'{}.is_available_for\'.'.format(self.__class__.__name__))
+        raise NotImplementedError(f'Missing \'{self.__class__.__name__}.is_available_for\'.')
 
     def show(
         self,
@@ -151,4 +162,4 @@ class S4MSMMenuItem(HasLog):
         :param on_close: The action to take upon the settings being closed. Default is CommonFunctionUtils.noop.
         :type on_close: Callable[..., Any], optional
         """
-        raise NotImplementedError('Missing \'{}.show\'.'.format(self.__class__.__name__))
+        raise NotImplementedError(f'Missing \'{self.__class__.__name__}.show\'.')

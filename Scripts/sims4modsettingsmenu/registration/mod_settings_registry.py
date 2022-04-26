@@ -6,7 +6,7 @@ https://creativecommons.org/licenses/by/4.0/legalcode
 
 Copyright (c) COLONOLNUTTY
 """
-from typing import List, Any, Tuple
+from typing import List, Any, Tuple, Iterator
 
 from sims.sim_info import SimInfo
 from sims4communitylib.logging.has_class_log import HasClassLog
@@ -23,10 +23,6 @@ class S4MSMModSettingsRegistry(CommonService, HasClassLog):
 
     """
 
-    def __init__(self) -> None:
-        super().__init__()
-        self._registered_menu_items: List[S4MSMMenuItem] = list()
-
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
     def get_mod_identity(cls) -> CommonModIdentity:
@@ -36,6 +32,10 @@ class S4MSMModSettingsRegistry(CommonService, HasClassLog):
     @classmethod
     def get_log_identifier(cls) -> str:
         return 's4msm_mod_settings_registry'
+
+    def __init__(self) -> None:
+        super().__init__()
+        self._registered_menu_items: List[S4MSMMenuItem] = list()
 
     @classmethod
     def register_menu_item(cls, menu_item: S4MSMMenuItem):
@@ -61,34 +61,36 @@ class S4MSMModSettingsRegistry(CommonService, HasClassLog):
         :return: True, if menu items are available for the Target. False, if not.
         :rtype: bool
         """
-        self.log.debug('Determining if any menu items are available for {}.'.format(target))
-        for menu_item in self._registered_menu_items:
-            if menu_item.is_available_for(source_sim_info, target=target):
-                self.log.debug('Menu items are available for the Target.')
-                return True
-        self.log.debug('No menu items are available for the Target.')
+        self.log.format_with_message('Checking if any menu items are available for Sim and Target.', sim=source_sim_info, target=target)
+        for _ in self._get_menu_items_available_for_gen(source_sim_info, target=target):
+            return True
+        self.log.format_with_message('No menu items are available for Sim and Target.', sim=source_sim_info, target=target)
         return False
 
     def get_menu_items_available_for(self, source_sim_info: SimInfo, target: Any=None) -> Tuple[S4MSMMenuItem]:
         """get_menu_items_available_for(source_sim_info, target=None)
 
-        Retrieve the menu items available for the specified Target.
+        Retrieve the menu items available for the a Sim and a Target.
 
         :param source_sim_info: An instance of a Sim.
         :type source_sim_info: SimInfo
         :param target: An instance of an object. Default is None.
         :type target: Any, optional
-        :return: A collection of menu items available for a Target.
+        :return: A collection of menu items available for a Sim and a Target.
         :rtype: Tuple[S4MSMMenuItem]
         """
-        self.log.debug('Attempting to locate menu items available for {}.'.format(target))
-        available_menu_items: List[S4MSMMenuItem] = list()
+        self.log.format_with_message('Attempting to locate menu items available for Sim and Target.', sim=source_sim_info, target=target)
+        return tuple(self._get_menu_items_available_for_gen(source_sim_info, target=target))
+
+    def _get_menu_items_available_for_gen(self, source_sim_info: SimInfo, target: Any=None) -> Iterator[S4MSMMenuItem]:
+        menu_items_count = 0
         for menu_item in self._registered_menu_items:
-            self.log.debug('Checking if menu item \'{}\' is available for the Target.'.format(menu_item.identifier))
-            if not menu_item.is_available_for(source_sim_info, target=target):
-                self.log.debug('Available.')
+            self.log.format_with_message(f'Checking if menu item \'{menu_item.identifier}\' is available for the Sim and Target.')
+            is_available_for_result = menu_item.is_available_for(source_sim_info, target=target)
+            if not is_available_for_result:
+                self.log.format_with_message('Menu Item is not Available.', menu_item=menu_item, is_available_for_result=is_available_for_result)
                 continue
-            self.log.debug('Not Available.')
-            available_menu_items.append(menu_item)
-        self.log.debug('Located {} menu items available for Target.'.format(len(available_menu_items)))
-        return tuple(available_menu_items)
+            menu_items_count += 1
+            self.log.format_with_message('Menu Item is Available.', menu_item=menu_item)
+            yield menu_item
+        self.log.format_with_message(f'Located {menu_items_count} menu item(s( that were available for Sim and Target.', sim=source_sim_info, target=target)

@@ -8,6 +8,7 @@ Copyright (c) COLONOLNUTTY
 """
 from typing import Any
 
+from sims4communitylib.classes.testing.common_test_result import CommonTestResult
 from sims4modsettingsmenu.dialogs.mod_settings_menu_dialog import S4ModSettingsMenu
 from sims4modsettingsmenu.modinfo import ModInfo
 from event_testing.results import TestResult
@@ -25,8 +26,8 @@ class S4MSMOpenModSettingsMenuInteraction(CommonImmediateSuperInteraction):
     Open the Mod Settings Menu.
     """
 
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(self, *_, **__) -> None:
+        super().__init__(*_, **__)
         self._mod_settings_menu = S4ModSettingsMenu()
 
     # noinspection PyMissingOrEmptyDocstring
@@ -52,28 +53,16 @@ class S4MSMOpenModSettingsMenuInteraction(CommonImmediateSuperInteraction):
 
     # noinspection PyMissingOrEmptyDocstring
     @classmethod
-    def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, **kwargs) -> TestResult:
-        cls.get_log().format_with_message(
-            'Running \'{}\' on_test.'.format(cls.__name__),
-            interaction_sim=interaction_sim,
-            interaction_target=interaction_target,
-            interaction_context=interaction_context,
-            kwargles=kwargs
-        )
+    def on_test(cls, interaction_sim: Sim, interaction_target: Any, interaction_context: InteractionContext, *args, **kwargs) -> CommonTestResult:
         source_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         if not cls.get_mod_settings_registry().has_menu_items_available_for(source_sim_info, target=interaction_target):
             cls.get_log().debug('No menu items were available for \'{}\''.format(interaction_target))
-            return TestResult.NONE
+            return cls.create_test_result(False)
         cls.get_log().debug('Success, can open mod settings.')
-        return TestResult.TRUE
+        return cls.create_test_result(True)
 
     # noinspection PyMissingOrEmptyDocstring
-    def on_started(self, interaction_sim: Sim, interaction_target: Sim) -> bool:
-        self.log.format_with_message(
-            'Running \'{}\' on_started.'.format(self.__class__.__name__),
-            interaction_sim=interaction_sim,
-            interaction_target=interaction_target
-        )
+    def on_started(self, interaction_sim: Sim, interaction_target: Any) -> bool:
         source_sim_info = CommonSimUtils.get_sim_info(interaction_sim)
         self._mod_settings_menu.open(source_sim_info, target=interaction_target)
         return True
