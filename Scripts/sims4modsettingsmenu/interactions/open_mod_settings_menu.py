@@ -11,7 +11,6 @@ from typing import Any
 from sims4communitylib.classes.testing.common_test_result import CommonTestResult
 from sims4modsettingsmenu.dialogs.mod_settings_menu_dialog import S4ModSettingsMenu
 from sims4modsettingsmenu.modinfo import ModInfo
-from event_testing.results import TestResult
 from interactions.context import InteractionContext
 from sims.sim import Sim
 from sims4communitylib.classes.interactions.common_immediate_super_interaction import CommonImmediateSuperInteraction

@@ -29,7 +29,7 @@ class S4ModSettingsMenu(HasLog):
     The dialog shown when the Open Mod Settings interaction is used.
 
     """
-    def __init__(self, on_close: Callable[[], None]=None) -> None:
+    def __init__(self, on_close: Callable[[], None] = None) -> None:
         super().__init__()
         self._on_close = on_close
         self._menu_item_registry = S4MSMModSettingsRegistry()
@@ -44,7 +44,7 @@ class S4ModSettingsMenu(HasLog):
     def log_identifier(self) -> str:
         return 's4msm_mod_settings_dialog'
 
-    def open(self, source_sim_info: SimInfo, target: Any=None, page: int=1) -> None:
+    def open(self, source_sim_info: SimInfo, target: Any = None, page: int = 1) -> None:
         """open(source_sim_info, target=None, page=1)
 
         Open the mod settings menu.

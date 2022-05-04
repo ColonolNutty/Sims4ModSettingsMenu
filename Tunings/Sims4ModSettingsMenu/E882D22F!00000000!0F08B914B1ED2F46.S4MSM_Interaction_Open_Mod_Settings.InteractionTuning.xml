@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<I c="S4MSMOpenModSettingsMenuInteraction" i="interaction" m="sims4modsettingsmenu.interactions.open_mod_settings_menu" n="S4MSM_Open_Mod_Settings" s="17254769732803423967">
+<I c="S4MSMOpenModSettingsMenuInteraction" i="interaction" m="sims4modsettingsmenu.interactions.open_mod_settings_menu" n="S4MSM_Interaction_Open_Mod_Settings" s="1083319208918200134">
   <V n="_saveable" t="disabled" />
   <T n="category">0</T>
   <T n="display_name">0x630737CA<!--Configure Mod Settings--></T>

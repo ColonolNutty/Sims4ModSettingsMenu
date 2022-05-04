@@ -49,7 +49,7 @@ class S4MSMModSettingsRegistry(CommonService, HasClassLog):
     def _register_menu_item(self, menu_item: S4MSMMenuItem):
         self._registered_menu_items.append(menu_item)
 
-    def has_menu_items_available_for(self, source_sim_info: SimInfo, target: Any=None) -> bool:
+    def has_menu_items_available_for(self, source_sim_info: SimInfo, target: Any = None) -> bool:
         """has_menu_items_available_for(source_sim_info, target=target)
 
         Determine if menu items are available for a Target.
@@ -67,7 +67,7 @@ class S4MSMModSettingsRegistry(CommonService, HasClassLog):
         self.log.format_with_message('No menu items are available for Sim and Target.', sim=source_sim_info, target=target)
         return False
 
-    def get_menu_items_available_for(self, source_sim_info: SimInfo, target: Any=None) -> Tuple[S4MSMMenuItem]:
+    def get_menu_items_available_for(self, source_sim_info: SimInfo, target: Any = None) -> Tuple[S4MSMMenuItem]:
         """get_menu_items_available_for(source_sim_info, target=None)
 
         Retrieve the menu items available for the a Sim and a Target.
@@ -82,7 +82,7 @@ class S4MSMModSettingsRegistry(CommonService, HasClassLog):
         self.log.format_with_message('Attempting to locate menu items available for Sim and Target.', sim=source_sim_info, target=target)
         return tuple(self._get_menu_items_available_for_gen(source_sim_info, target=target))
 
-    def _get_menu_items_available_for_gen(self, source_sim_info: SimInfo, target: Any=None) -> Iterator[S4MSMMenuItem]:
+    def _get_menu_items_available_for_gen(self, source_sim_info: SimInfo, target: Any = None) -> Iterator[S4MSMMenuItem]:
         menu_items_count = 0
         for menu_item in self._registered_menu_items:
             self.log.format_with_message(f'Checking if menu item \'{menu_item.identifier}\' is available for the Sim and Target.')

@@ -11,4 +11,4 @@ from sims4communitylib.enums.enumtypes.common_int import CommonInt
 
 class S4MSMInteractionId(CommonInt):
     """ Interaction Ids used by S4MSM. """
-    OPEN_MOD_SETTINGS_MENU = 17254769732803423967
+    OPEN_MOD_SETTINGS_MENU = 1083319208918200134

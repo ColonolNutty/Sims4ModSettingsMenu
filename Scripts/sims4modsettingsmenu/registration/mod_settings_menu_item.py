@@ -121,7 +121,7 @@ class S4MSMMenuItem(HasLog):
     def log_identifier(self) -> str:
         return 's4msm_menu_item'
 
-    def is_available_for(self, source_sim_info: SimInfo, target: Any=None) -> bool:
+    def is_available_for(self, source_sim_info: SimInfo, target: Any = None) -> bool:
         """is_available_for(source_sim_info, target=None)
 
         Determine if these settings are available for the Target.
@@ -141,8 +141,8 @@ class S4MSMMenuItem(HasLog):
         self,
         source_sim_info: SimInfo,
         *args,
-        target: Any=None,
-        on_close: Callable[..., Any]=CommonFunctionUtils.noop,
+        target: Any = None,
+        on_close: Callable[..., Any] = CommonFunctionUtils.noop,
         **kwargs
     ):
         """show(\
